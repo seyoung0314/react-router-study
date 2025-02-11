@@ -1,9 +1,13 @@
-import React from 'react'
+import React from "react";
+import MainNav from '../components/MainNav';
 
 const BlogPage = () => {
   return (
-    <div>BlogPage</div>
-  )
-}
+    <>
+        <MainNav />
+      <h1>BlogPage</h1>
+    </>
+  );
+};
 
-export default BlogPage
+export default BlogPage;

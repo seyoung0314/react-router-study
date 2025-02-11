@@ -1,8 +1,12 @@
 import React from 'react'
+import MainNav from '../components/MainNav';
 
 const AboutPage = () => {
   return (
-    <div>AboutPage</div>
+    <>
+    <MainNav />
+    <h1>AboutPage</h1>
+    </>
   )
 }
 
