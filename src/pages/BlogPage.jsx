@@ -4,6 +4,7 @@ import styles from "./BlogPage.module.scss";
 import PostCard from "../components/PostCard";
 import { posts } from "../assets/dummy-data";
 import { useSearchParams } from "react-router-dom";
+import BlogFilter from "../components/BlogFilter";
 
 const BlogPage = () => {
   //?(쿼리스트링)뒤에 값 읽는법
@@ -13,12 +14,13 @@ const BlogPage = () => {
 
   const category = searchParams.get("category") || "all";
   const sort = searchParams.get("sort") || "latest";
-  const search = searchParams.get('search')?.toLowerCase() || '';
-  
-console.log(search);
+  const search = searchParams.get("search")?.toLowerCase() || "";
+
+  console.log(search);
 
   return (
     <div className={styles.blog}>
+      <BlogFilter />
       <div className={styles.grid}>
         {posts
           .filter((post) => category === "all" || post.category === category)
@@ -28,7 +30,7 @@ console.log(search);
               post.excerpt.toLowerCase().includes(search)
           )
           .sort((a, b) =>
-            sort === "lastest"
+            sort === "latest"
               ? new Date(b.date) - new Date(a.date)
               : new Date(a.date) - new Date(b.date)
           )
