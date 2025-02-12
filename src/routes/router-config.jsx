@@ -22,6 +22,11 @@ export const router = createBrowserRouter([
         path: "blog",
         element: <BlogPage />,
       },
+      // 고정값은 상단에 배치
+      {
+        path: "blog/new",
+        element: <p>새 블로그 쓰기 페이지</p>,
+      },
       {
         path: "blog/:postId",
         element: <BlogPostDetail/>,
