@@ -1,29 +1,36 @@
-import { NavLink, useNavigate, useSearchParams } from 'react-router-dom';
-import styles from './BlogSidebar.module.scss';
-import { categories, posts } from '../assets/dummy-data';
+import { NavLink, useNavigate, useSearchParams } from "react-router-dom";
+import styles from "./BlogSidebar.module.scss";
+import { categories, posts } from "../assets/dummy-data";
 
 function BlogSidebar() {
-
   const [searchParams, setSearchParams] = useSearchParams();
 
   // 새로고침 없이 링크기능을 지원하는 함수
   const navigate = useNavigate();
 
   // 사이드에 있는 카테고리를 누르면 목록으로 이동하면서 카테고리를 보여줘야 함
-  const handleCategoryClick = category => { 
+  const handleCategoryClick = (category) => {
     // location.href = '/blog?category=react';
 
     // 먼저 /blog 로 이동
-    navigate('/blog');
-    
-    setSearchParams(prev => { 
-      if (category === 'all') {
-        prev.delete('category');
+    navigate("/blog");
+
+    setSearchParams((prev) => {
+      if (category === "all") {
+        prev.delete("category");
       } else {
-        prev.set('category', category);
+        prev.set("category", category);
       }
       return prev;
     });
+  };
+
+  //블로그 게시글별 카테고리 수 카운팅
+  const getCategoryCount = (category) => {
+    if (category === "all") {
+      return posts.length;
+    }
+    return posts.filter((post) => post.category === category).length;
   };
 
 
@@ -34,12 +41,19 @@ function BlogSidebar() {
         {categories.map((category) => (
           <li key={category.id}>
             <button
-              className={`${styles.categoryButton}`}
+              className={`
+                ${styles.categoryButton} 
+                ${
+                  (searchParams.get("category") || "all") === category.id
+                    ? styles.active
+                    : ""
+                }
+                `}
               onClick={(e) => handleCategoryClick(category.id)}
             >
               {category.name}
               <span className={styles.count}>
-                2
+                {getCategoryCount(category.id)}
               </span>
             </button>
           </li>
@@ -48,9 +62,7 @@ function BlogSidebar() {
 
       <div className={styles.recentPosts}>
         <h2>최근 글</h2>
-        <ul>
-          
-        </ul>
+        <ul></ul>
       </div>
 
       <div className={styles.tags}>
