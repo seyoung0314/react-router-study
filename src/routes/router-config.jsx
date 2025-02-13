@@ -1,9 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
+import RootLayout from "../layouts/RootLayout";
 import IndexPage from "../pages/IndexPage";
 import BlogPage from "../pages/BlogPage";
 import AboutPage from "../pages/AboutPage";
 import BlogPostDetail from "../pages/BlogPostDetail";
-import RootLayout from "../layouts/RootLayout";
+import BlogLayout from "../layouts/BlogLayout";
 import { Children } from "react";
 import ErrorPage from "../pages/ErrorPage";
 
@@ -12,7 +13,7 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
-    errorElement :<ErrorPage/>,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
@@ -20,16 +21,17 @@ export const router = createBrowserRouter([
       },
       {
         path: "blog",
-        element: <BlogPage />,
-      },
-      // 고정값은 상단에 배치
-      {
-        path: "blog/new",
-        element: <p>새 블로그 쓰기 페이지</p>,
-      },
-      {
-        path: "blog/:postId",
-        element: <BlogPostDetail/>,
+        element: <BlogLayout />,
+        children: [
+          {
+            index: true,
+            element: <BlogPage />,
+          },
+          {
+            path: "postId",
+            element: <BlogPostDetail />,
+          },
+        ],
       },
       {
         path: "about",
