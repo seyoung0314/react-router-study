@@ -33,6 +33,10 @@ function BlogSidebar() {
     return posts.filter((post) => post.category === category).length;
   };
 
+  // 최근 글 3개 가져오기 (날짜 기준 정렬)
+  const recentPosts = [...posts]
+    .sort((a, b) => new Date(b.date) - new Date(a.date))
+    .slice(0, 3);
 
   return (
     <aside className={styles.sidebar}>
@@ -62,7 +66,16 @@ function BlogSidebar() {
 
       <div className={styles.recentPosts}>
         <h2>최근 글</h2>
-        <ul></ul>
+        <ul>
+        {recentPosts.map((post) => (
+            <li key={post.id}>
+              <NavLink to={`/blog/${post.id}`}>
+                {post.title}
+                <span className={styles.recentPostDate}>{post.date}</span>
+              </NavLink>
+            </li>
+          ))}
+        </ul>
       </div>
 
       <div className={styles.tags}>
